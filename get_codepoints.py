@@ -9,5 +9,3 @@ def get_codepoints(font_path):
             codepoints.extend(table.cmap.keys())
 
     return sorted(set(codepoints))
-
-fpath = 'open_sans/static/OpenSans-Regular.ttf'
