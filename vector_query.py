@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 import faiss
 
 data = np.load('image_features.npz', allow_pickle=True)
@@ -27,8 +28,18 @@ def get_feature_vector_by_label(label):
     ind = matches[0][0]
     return feature_vectors[ind*8]
 
-query_label = '0042'
-query_vec = get_feature_vector_by_label(query_label)
-nearest_labels = query_vector(query_vec, 10)
-print(f'Query codepoint: {query_label}')
-print("Labels of the nearest neighbors:", nearest_labels)
+if __name__ == '__main__':
+    while True:
+        user_input = input("Enter a codepoint (4 characters) or type 'q': ")
+        if user_input.strip().lower() == 'q':
+            break
+        if len(user_input.strip().lower()) != 4:
+            print("\nMust be 4 characters\n")
+            continue
+        
+        query_label = user_input.strip().lower()
+        query_vec = get_feature_vector_by_label(query_label)
+        nearest_labels = query_vector(query_vec, 10)
+        print(f'\nQuery codepoint: {query_label}')
+        print("Labels of the nearest neighbors:", nearest_labels)
+        print("\n")
