@@ -4,10 +4,7 @@ import faiss
 data = np.load('image_features.npz', allow_pickle=True)
 feature_vectors = data['features']
 labels = data['labels']
-print(feature_vectors.shape)
-print(labels.shape)
 vector_dim = feature_vectors.shape[1]
-print(vector_dim)
 index = faiss.IndexFlatL2(vector_dim)  
 index.add(feature_vectors)  
 
@@ -30,7 +27,8 @@ def get_feature_vector_by_label(label):
     ind = matches[0][0]
     return feature_vectors[ind*8]
 
-query_vec = get_feature_vector_by_label('0042')
+query_label = '0042'
+query_vec = get_feature_vector_by_label(query_label)
 nearest_labels = query_vector(query_vec, 10)
+print(f'Query codepoint: {query_label}')
 print("Labels of the nearest neighbors:", nearest_labels)
-print(labels[:10])
